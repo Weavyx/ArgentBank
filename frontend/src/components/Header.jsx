@@ -27,9 +27,9 @@ const Header = () => {
           <i className='fa fa-user-circle header__icon'></i><span className='header__link-text'>{isAuthenticated ? user?.firstName : 'Sign In'}</span>
         </Link>
         {isAuthenticated && (
-          <a className="header__link" onClick={handleLogout} >
+          <button className="header__link" onClick={handleLogout} style={{background: 'none', border: 'none', padding: 0, cursor: 'pointer'}}>
             <i className="fa fa-sign-out header__icon"></i><span className='header__link-text'>Sign Out</span>
-          </a>
+          </button>
         )}
       </div>
     </header>

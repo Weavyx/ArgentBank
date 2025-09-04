@@ -31,3 +31,19 @@ export async function login(email, password) {
     user: profile.body,
   };
 }
+
+// Fetch user profile using token
+export async function fetchUserProfile(token) {
+  const response = await fetch(`${API_URL}/profile`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) {
+    throw new Error("Cannot fetch profile");
+  }
+  const data = await response.json(); // { body: { firstName, lastName, email, etc. } }
+  return data.body;
+}

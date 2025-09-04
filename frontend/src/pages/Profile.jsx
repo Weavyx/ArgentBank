@@ -1,7 +1,9 @@
 import "../styles/Profile.css";
 import Account from "../components/Account";
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
+  const { user, loading } = useSelector((s) => s.auth);
 
   const accountContent = [
     {
@@ -24,7 +26,14 @@ const Profile = () => {
   return (
     <main className="user">
       <div className="user__header">
-        <h1 className="user__welcome">Welcome back<br />Tony Jarvis!</h1>
+        <h1 className="user__welcome">
+          Welcome back<br />
+          {loading ? (
+            <span>Loading...</span>
+          ) : (
+            <span>{user.firstName} {user.lastName}!</span>
+          )}
+        </h1>
         <button className="user__edit-button">Edit Name</button>
       </div>
       <h2 className="user__accounts-title sr-only">Accounts</h2>
