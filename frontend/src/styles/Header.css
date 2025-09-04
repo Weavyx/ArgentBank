@@ -6,7 +6,12 @@
   background-color: #f8f9fa;
 }
 
+.header__links {
+  display: flex;
+}
+
 .header__link {
+  cursor: pointer;
   display: flex;
   text-decoration: none;
   font-weight: bold;

@@ -1,18 +1,7 @@
 import "../styles/Profile.css";
 import Account from "../components/Account";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 const Profile = () => {
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    }
-  }, [isAuthenticated, navigate]);
 
   const accountContent = [
     {

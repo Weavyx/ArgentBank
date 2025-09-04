@@ -6,7 +6,8 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const response = await authService.login(email, password);
-      return response.body;
+      // response = { token, user }
+      return response;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -15,7 +16,10 @@ export const loginUser = createAsyncThunk(
 
 const initialState = {
   token: null,
-  user: null,
+  user: {
+    firstName: null,
+    lastName: null,
+  },
   isAuthenticated: false,
   loading: false,
   error: null,
@@ -27,7 +31,10 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.token = null;
-      state.user = null;
+      state.user = {
+        firstName: null,
+        lastName: null,
+      };
       state.isAuthenticated = false;
       state.error = null;
     },
@@ -41,7 +48,7 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.token = action.payload.token;
-        state.user = { email: action.payload.email };
+        state.user = action.payload.user; // contient firstname, lastname, email
         state.isAuthenticated = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
