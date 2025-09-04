@@ -1,0 +1,44 @@
+.feature-item {
+  width: 33.333%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 40px;
+}
+
+.feature-item__icon {
+  border: 10px solid #00bc77;
+  border-radius: 50%;
+  padding: 1rem;
+  width: 152px;
+  height: 152px;
+}
+
+.feature-item__title {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  color: #222;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  margin: 23px 0 0 0;
+  text-align: center;
+}
+
+.feature-item__description {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  color: #2c3e50;
+  margin: 16px 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+@media (max-width: 920px) {
+  .feature-item {
+    width: 100%;
+  }
+
+
+
+}

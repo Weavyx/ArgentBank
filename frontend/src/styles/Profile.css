@@ -1,0 +1,50 @@
+.main-content:has(.user) {
+  background-color: #12002b;
+  min-height: max(682.6167px, calc(100vh - 140.383px));
+}
+
+.user {
+  display: flex;
+  flex-direction: column;
+}
+
+.user__header {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.user__welcome {
+  color: #fff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 21.44px 0;
+}
+
+.user__edit-button {
+  border-color: #00bc77;
+  background-color: #00bc77;
+  color: #fff;
+  padding: 10px;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  text-align: center;
+  width: 92.9333px;
+  height: 40px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sr-only {
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
+}

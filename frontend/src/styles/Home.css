@@ -1,0 +1,96 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: flex-start;
+  background-color: #fff;
+}
+
+.home__hero {
+  background-image: url("../assets/bank-tree.jpeg");
+  background-position: 0% 33%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 400px;
+  width: 100%;
+  position: relative;
+}
+
+.hero__content {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  width: 364px;
+  margin: 2rem;
+  background: white;
+  padding: 2rem;
+  text-align: left;
+
+  .subtitle {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #2c3e50;
+    font-family: Arial, sans-serif;
+    width: 300px;
+  }
+
+  .text {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    font-family: Arial, sans-serif;
+    margin-top: 19.2px;
+    width: 300px;
+  }
+}
+
+.feature-item-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.sr-only {
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 919px) {
+  .feature-item-container {
+    flex-direction: column;
+  }
+  .home__hero {
+    background-position: 0 -50px;
+    height: 300px;
+  }
+
+  .hero__content {
+    top: 2rem;
+    right: 50%;
+    margin: 0 auto;
+    transform: translateX(50%);
+    width: 264px;
+
+    .subtitle {
+      font-size: 16px;
+      width: 100%;
+    }
+
+    .text {
+      width: 100%;
+      font-size: 15px;
+      margin-top: 14.4px;
+      height: 34px;
+      font-weight: 400;
+    }
+  }
+}
