@@ -3,6 +3,7 @@ import App from "./App";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import PrivateRoute from "./components/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -11,7 +12,12 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: "login", element: <Login /> },
-      { path: "profile", element: <Profile /> }
+      {
+        element: <PrivateRoute />,
+        children: [
+          { path: "profile", element: <Profile /> },
+        ],
+      },
     ],
   },
 ]);
