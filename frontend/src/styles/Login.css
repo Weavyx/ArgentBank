@@ -1,9 +1,9 @@
-.main-content:has(.sign-in) {
+.main-content:has(.login) {
   min-height: max(425.433px, calc(100vh - 140.383px));
   background-color: #12002b;
 }
 
-.sign-in {
+.login {
   position: absolute;
   top: 48px;
   left: 50%;
@@ -16,19 +16,19 @@
   align-items: center;
 }
 
-.sign-in__icon {
+.login__icon {
   font-size: 16px;
   color: #2c3e50;
 }
 
-.sign-in__title {
+.login__title {
   margin: 23px 0 21.44px 0;
   font-family: Arial, sans-serif;
   text-align: center;
   color: #2c3e50;
 }
 
-.sign-in__form {
+.login__form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,27 +37,27 @@
   justify-content: space-between;
 }
 
-.sign-in__input-wrapper {
+.login__input-wrapper {
   display: flex;
   flex-direction: column;
   align-items: start;
   width: 100%;
 }
 
-.sign-in__label {
+.login__label {
   font-family: Arial, sans-serif;
   text-align: left;
   color: #2c3e50;
   font-weight: bold;
 }
 
-.sign-in__input {
+.login__input {
   padding: 5px;
   font-size: 1.2rem;
   width: 100%;
 }
 
-.sign-in__remember {
+.login__remember {
   display: flex;
   align-items: center;
   width: 100%;
@@ -66,14 +66,21 @@
   margin: 3px 3px 3px 4px;
 }
 
-.sign-in__remember-label {
+.login__remember-label {
   padding-left: 4px;
   font-family: Arial, sans-serif;
   text-align: center;
   color: #2c3e50;
 }
 
-.sign-in__button {
+.login__button-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.login__button {
   display: block;
   width: 100%;
   padding: 8px;
@@ -84,4 +91,13 @@
   text-decoration: underline;
   border: none;
   font-family: Arial, sans-serif;
+}
+
+.login__error {
+  font-family: Arial, sans-serif;
+  text-align: left;
+  font-size: 10px;
+  color: red;
+  width: 100%;
+  line-height: 10px;
 }
