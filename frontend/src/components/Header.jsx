@@ -12,9 +12,8 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    setTimeout(() => {
-      navigate('/', { replace: true });
-    }, 0); // Délai minimal pour laisser Redux se mettre à jour
+    navigate('/', { replace: true });
+
   };
 
   return (
