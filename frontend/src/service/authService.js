@@ -47,3 +47,20 @@ export async function fetchUserProfile(token) {
   const data = await response.json(); // { body: { firstName, lastName, email, etc. } }
   return data.body;
 }
+
+// Update user profile (firstName, lastName)
+export async function updateUserProfile(token, firstName, lastName) {
+  const response = await fetch(`${API_URL}/profile`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ firstName, lastName }),
+  });
+  if (!response.ok) {
+    throw new Error("Cannot update profile");
+  }
+  const data = await response.json(); // { body: { firstName, lastName, email, etc. } }
+  return data.body;
+}

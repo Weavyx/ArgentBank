@@ -31,6 +31,27 @@ export const getUserInfo = createAsyncThunk(
   }
 );
 
+export const updateUserProfile = createAsyncThunk(
+  "auth/updateUserProfile",
+  async ({ firstName, lastName }, { getState, rejectWithValue }) => {
+    const state = getState();
+    const token = state.auth.token || localStorage.getItem("token");
+    if (!token) {
+      return rejectWithValue("No token found");
+    }
+    try {
+      const response = await authService.updateUserProfile(
+        token,
+        firstName,
+        lastName
+      );
+      return response; // { firstName, lastName, email, etc. }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const initialState = {
   token: localStorage.getItem("token") || null,
   user: JSON.parse(localStorage.getItem("user")) || {
@@ -96,6 +117,19 @@ const authSlice = createSlice({
           localStorage.removeItem("token");
           localStorage.removeItem("user");
         }
+      })
+      .addCase(updateUserProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload; // Met à jour les infos utilisateur
+        localStorage.setItem("user", JSON.stringify(action.payload));
+      })
+      .addCase(updateUserProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || action.error.message;
       });
   },
 });
