@@ -11,11 +11,11 @@ const dispatch = useDispatch();
 const { user } = useSelector((s) => s.auth);
 
   useEffect(() => {
-  const token = localStorage.getItem('token');
-  if (token && !user.firstName) {
-    dispatch(getUserInfo());
-  }
-}, []);
+    const token = localStorage.getItem('token');
+    if (token && !user.firstName) {
+      dispatch(getUserInfo());
+    }
+  }, [user.firstName, dispatch]);
 
   return (
     <>
