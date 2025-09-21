@@ -11,7 +11,7 @@ const dispatch = useDispatch();
 const { user } = useSelector((s) => s.auth);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     if (token && !user.firstName) {
       dispatch(getUserInfo());
     }

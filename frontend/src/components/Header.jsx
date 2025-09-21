@@ -13,7 +13,6 @@ const Header = () => {
   const handleLogout = () => {
     dispatch(logout());
     navigate('/', { replace: true });
-
   };
 
   return (
