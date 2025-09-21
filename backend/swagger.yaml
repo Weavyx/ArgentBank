@@ -70,6 +70,7 @@ paths:
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+          type: string
       produces:
         - application/json
       responses:
@@ -93,6 +94,7 @@ paths:
           name: Authorization
           description: Attach Bearer JWT token
           required: true
+          type: string
         - in: body
           name: body
           description: Update user profile attributes
@@ -110,12 +112,282 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+  /user/transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Get all user transactions for the current month
+      description: Returns all transactions for the authenticated user, grouped by account, for the current month.
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: List of transactions grouped by account
+          schema:
+            $ref: '#/definitions/TransactionListResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Add a new transaction
+      description: Add a new transaction for the authenticated user.
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Transaction creation payload
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionCreate'
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: Transaction created successfully
+          schema:
+            $ref: '#/definitions/TransactionResponse'
+        '400':
+          description: Invalid fields
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /user/transactions/{transactionId}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Get details of a specific transaction
+      description: Returns detailed information for a specific transaction belonging to the authenticated user.
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: path
+          name: transactionId
+          description: ID of the transaction
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction details
+          schema:
+            $ref: '#/definitions/TransactionResponse'
+        '404':
+          description: Transaction not found
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Update a transaction
+      description: Update information for a specific transaction.
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: path
+          name: transactionId
+          description: ID of the transaction
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Transaction update payload
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionUpdate'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction updated successfully
+          schema:
+            $ref: '#/definitions/TransactionResponse'
+        '400':
+          description: Invalid fields
+        '404':
+          description: Transaction not found
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Delete a transaction
+      description: Delete a specific transaction.
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: path
+          name: transactionId
+          description: ID of the transaction
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction deleted successfully
+        '404':
+          description: Transaction not found
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
 securityDefinitions:
   Bearer:
     type: apiKey
     name: Authorization
     in: header
 definitions:
+  Transaction:
+    description: Represents a single banking transaction.
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique identifier for the transaction
+      accountId:
+        type: string
+        description: Identifier of the account related to the transaction
+      date:
+        type: string
+        format: date
+        description: Date of the transaction
+      amount:
+        type: number
+        description: Amount of the transaction
+      type:
+        type: string
+        description: Transaction type (e.g. debit, credit)
+      category:
+        type: string
+        description: Category of the transaction
+      notes:
+        type: string
+        description: Additional notes or comments
+
+  TransactionListResponse:
+    description: Response model for a list of transactions grouped by account.
+    type: object
+    properties:
+      status:
+        type: integer
+        description: Status code of the response
+      message:
+        type: string
+        description: Informational message
+      body:
+        type: object
+        description: Contains the grouped transactions
+        properties:
+          accounts:
+            type: array
+            description: List of accounts with their transactions
+            items:
+              type: object
+              properties:
+                accountId:
+                  type: string
+                  description: Identifier of the account
+                transactions:
+                  type: array
+                  description: Transactions for the account
+                  items:
+                    $ref: '#/definitions/Transaction'
+
+  TransactionResponse:
+    description: Response model for a single transaction detail.
+    type: object
+    properties:
+      status:
+        type: integer
+        description: Status code of the response
+      message:
+        type: string
+        description: Informational message
+      body:
+        $ref: '#/definitions/Transaction'
+
+  TransactionCreate:
+    description: Payload model for creating a new transaction.
+    type: object
+    properties:
+      accountId:
+        type: string
+        description: Identifier of the account for the transaction
+      date:
+        type: string
+        format: date
+        description: Date of the transaction
+      amount:
+        type: number
+        description: Amount of the transaction
+      type:
+        type: string
+        description: Transaction type (e.g. debit, credit)
+      category:
+        type: string
+        description: Category of the transaction
+      notes:
+        type: string
+        description: Additional notes or comments
+
+  TransactionUpdate:
+    description: Payload model for updating an existing transaction.
+    type: object
+    properties:
+      date:
+        type: string
+        format: date
+        description: New date of the transaction
+      amount:
+        type: number
+        description: New amount of the transaction
+      type:
+        type: string
+        description: New transaction type (e.g. debit, credit)
+      category:
+        type: string
+        description: New category of the transaction
+      notes:
+        type: string
+        description: New notes or comments
   User:
     properties:
       email:
