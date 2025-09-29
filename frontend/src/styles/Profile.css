@@ -101,3 +101,21 @@
   cursor: pointer;
   width: 85px;
 }
+
+/* Messages d'erreur du formulaire */
+.user__error-messages {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.user__error-message {
+  color: #fff;
+  background: transparent;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}

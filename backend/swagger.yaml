@@ -137,38 +137,6 @@ paths:
           description: Unauthorized
         '500':
           description: Internal Server Error
-    post:
-      security:
-        - Bearer: []
-      tags:
-        - Transaction Module
-      summary: Add a new transaction
-      description: Add a new transaction for the authenticated user.
-      parameters:
-        - in: header
-          name: Authorization
-          description: Attach Bearer JWT token
-          required: true
-          type: string
-        - in: body
-          name: body
-          description: Transaction creation payload
-          required: true
-          schema:
-            $ref: '#/definitions/TransactionCreate'
-      produces:
-        - application/json
-      responses:
-        '201':
-          description: Transaction created successfully
-          schema:
-            $ref: '#/definitions/TransactionResponse'
-        '400':
-          description: Invalid fields
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
   /user/transactions/{transactionId}:
     get:
       security:
@@ -201,13 +169,14 @@ paths:
           description: Unauthorized
         '500':
           description: Internal Server Error
-    put:
+  /user/transactions/{transactionId}/notes/{noteId}:
+    get:
       security:
         - Bearer: []
       tags:
         - Transaction Module
-      summary: Update a transaction
-      description: Update information for a specific transaction.
+      summary: Get a specific note for a transaction
+      description: Returns a specific note for a transaction.
       parameters:
         - in: header
           name: Authorization
@@ -219,9 +188,92 @@ paths:
           description: ID of the transaction
           required: true
           type: string
+        - in: path
+          name: noteId
+          description: ID de la note
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Note details
+          schema:
+            $ref: '#/definitions/Note'
+        '404':
+          description: Note not found
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Add a note to a transaction
+      description: Add a new note to a transaction.
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: path
+          name: transactionId
+          description: ID of the transaction
+          required: true
+          type: string
+        - in: path
+          name: noteId
+          description: ID de la note
+          required: true
+          type: string
         - in: body
           name: body
-          description: Transaction update payload
+          description: Note à ajouter
+          required: true
+          schema:
+            $ref: '#/definitions/Note'
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: Note added
+          schema:
+            $ref: '#/definitions/Note'
+        '400':
+          description: Invalid fields
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+    patch:
+      security:
+        - Bearer: []
+      tags:
+        - Transaction Module
+      summary: Partially update a transaction
+      description: Partially update information for a specific transaction.
+      parameters:
+        - in: header
+          name: Authorization
+          description: Attach Bearer JWT token
+          required: true
+          type: string
+        - in: path
+          name: transactionId
+          description: ID of the transaction
+          required: true
+          type: string
+        - in: path
+          name: noteId
+          description: ID de la note
+          required: true
+          type: string
+        - in: body
+          name: body
+          description: Transaction partial update payload
           required: true
           schema:
             $ref: '#/definitions/TransactionUpdate'
@@ -258,6 +310,11 @@ paths:
           description: ID of the transaction
           required: true
           type: string
+        - in: path
+          name: noteId
+          description: ID de la note
+          required: true
+          type: string
       produces:
         - application/json
       responses:
@@ -275,6 +332,15 @@ securityDefinitions:
     name: Authorization
     in: header
 definitions:
+  Note:
+    type: object
+    properties:
+      noteId:
+        type: string
+        description: Identifiant unique de la note
+      content:
+        type: string
+        description: Contenu de la note
   Transaction:
     description: Represents a single banking transaction.
     type: object
@@ -299,8 +365,17 @@ definitions:
         type: string
         description: Category of the transaction
       notes:
-        type: string
-        description: Additional notes or comments
+        type: array
+        description: Tableau de notes associées à la transaction
+        items:
+          type: object
+          properties:
+            noteId:
+              type: string
+              description: Identifiant unique de la note
+            content:
+              type: string
+              description: Contenu de la note
 
   TransactionListResponse:
     description: Response model for a list of transactions grouped by account.
@@ -365,8 +440,17 @@ definitions:
         type: string
         description: Category of the transaction
       notes:
-        type: string
-        description: Additional notes or comments
+        type: array
+        description: Tableau de notes à ajouter à la transaction
+        items:
+          type: object
+          properties:
+            noteId:
+              type: string
+              description: Identifiant unique de la note
+            content:
+              type: string
+              description: Contenu de la note
 
   TransactionUpdate:
     description: Payload model for updating an existing transaction.
@@ -386,8 +470,17 @@ definitions:
         type: string
         description: New category of the transaction
       notes:
-        type: string
-        description: New notes or comments
+        type: array
+        description: Nouveau tableau de notes pour la transaction
+        items:
+          type: object
+          properties:
+            noteId:
+              type: string
+              description: Identifiant unique de la note
+            content:
+              type: string
+              description: Contenu de la note
   User:
     properties:
       email:

@@ -10,6 +10,8 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [firstNameError, setFirstNameError] = useState('');
+  const [lastNameError, setLastNameError] = useState('');
 
   const handleEditClick = () => {
     setFirstName(user.firstName || '');
@@ -25,6 +27,22 @@ const Profile = () => {
 
   const handleSave = (e) => {
     e.preventDefault();
+    // Regex : lettres, tirets, apostrophes, espaces, minimum 2 caractères
+    const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ'\-\s]{2,}$/;
+    let valid = true;
+    if (!nameRegex.test(firstName) || firstName.trim().length < 2) {
+      setFirstNameError('Prénom invalide. Utilisez uniquement des lettres, tirets, apostrophes et au moins 2 caractères.');
+      valid = false;
+    } else {
+      setFirstNameError('');
+    }
+    if (!nameRegex.test(lastName) || lastName.trim().length < 2) {
+      setLastNameError('Nom invalide. Utilisez uniquement des lettres, tirets, apostrophes et au moins 2 caractères.');
+      valid = false;
+    } else {
+      setLastNameError('');
+    }
+    if (!valid) return;
     dispatch(updateUserProfile({ firstName, lastName }));
     setIsEditing(false);
   };
@@ -95,6 +113,12 @@ const Profile = () => {
                 Cancel
               </button>
             </div>
+              {(firstNameError || lastNameError) && (
+                <div className="user__error-messages">
+                  {firstNameError && <div className="user__error-message">{firstNameError}</div>}
+                  {lastNameError && <div className="user__error-message">{lastNameError}</div>}
+                </div>
+              )}
           </form>
         )}
       </div>
