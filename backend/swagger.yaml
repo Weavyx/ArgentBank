@@ -419,38 +419,6 @@ definitions:
       body:
         $ref: '#/definitions/Transaction'
 
-  TransactionCreate:
-    description: Payload model for creating a new transaction.
-    type: object
-    properties:
-      accountId:
-        type: string
-        description: Identifier of the account for the transaction
-      date:
-        type: string
-        format: date
-        description: Date of the transaction
-      amount:
-        type: number
-        description: Amount of the transaction
-      type:
-        type: string
-        description: Transaction type (e.g. debit, credit)
-      category:
-        type: string
-        description: Category of the transaction
-      notes:
-        type: array
-        description: Tableau de notes à ajouter à la transaction
-        items:
-          type: object
-          properties:
-            noteId:
-              type: string
-              description: Identifiant unique de la note
-            content:
-              type: string
-              description: Contenu de la note
 
   TransactionUpdate:
     description: Payload model for updating an existing transaction.
